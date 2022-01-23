@@ -51,8 +51,9 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    data = tbl0[['_c1','_c2']].groupby('_c1').max()
+    data = tbl0[['_c1','_c2']].groupby('_c1').count()
     return data['_c2']
+
 
 
 def pregunta_04():
@@ -86,7 +87,7 @@ def pregunta_05():
     Name: _c2, dtype: int64
     """
     data= tbl0[['_c1','_c2']].groupby(['_c1']).max()
-    return data
+    return data['_c2']
 
 
 def pregunta_06():
@@ -183,7 +184,7 @@ def pregunta_10():
         else:
             dictionary[data['_c1'][i]] += ':'+str(data['_c2'][i]) 
     df = pd.DataFrame(list(dictionary.items()))
-    df = df.rename(columns={0:'_c0', 1:'_c1'})
+    df = df.rename(columns={0:'_c1', 1:'_c2'})
     return df
 
 
@@ -263,4 +264,4 @@ def pregunta_13():
     data_merged = pd.merge(data_c0,data_c2)
     df = data_merged[['_c1','_c5b']]
     df = df.groupby(['_c1']).sum()
-    return df
+    return df['_c5b']
