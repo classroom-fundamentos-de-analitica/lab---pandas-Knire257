@@ -175,17 +175,12 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    data = tbl0[['_c1','_c2']].copy()
-    data = data.sort_values(by=['_c1','_c2'])
-    dictionary = {}
-    for i in data.index:
-        if data['_c1'][i] not in dictionary:
-            dictionary[data['_c1'][i]] = str(data['_c2'][i])
-        else:
-            dictionary[data['_c1'][i]] += ':'+str(data['_c2'][i]) 
-    df = pd.DataFrame(list(dictionary.items()))
-    df = df.rename(columns={0:'_c1', 1:'_c2'})
-    return df
+    data_a = tbl0
+    data_b = data_a.groupby('_c1').agg({'_c2': lambda x: sorted(list(x))})
+    for index, row in data_b.iterrows():
+        row['_c2'] = ":".join([str(int) for int in row['_c2']])
+    return data_b
+
 
 
 def pregunta_11():
